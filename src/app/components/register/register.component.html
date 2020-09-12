@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <h5 class="card-header">{{ title }}</h5>
+            <div class="card-body">
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="off">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" formControlName="name" id="name">
+                        <div *ngIf="registerForm.get('name').hasError('required') && (registerForm.get('name').dirty || registerForm.get('name').touched)"
+                            class="alert alert-danger">
+                            <i class="fa fa-exclamation-circle"></i> Name is required
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="type">Type</label>
+                            <input type="text" class="form-control" formControlName="type" id="type">
+                            <div *ngIf="registerForm.get('type').hasError('required') && (registerForm.get('type').dirty || registerForm.get('type').touched)"
+                                class="alert alert-danger">
+                                <i class="fa fa-exclamation-circle"></i> Type is required
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="subType">Sub Type</label>
+                            <input type="text" class="form-control" formControlName="subType" id="subType">
+                            <div *ngIf="registerForm.get('subType').hasError('required') && (registerForm.get('subType').dirty || registerForm.get('subType').touched)"
+                                class="alert alert-danger">
+                                <i class="fa fa-exclamation-circle"></i> Sub Type is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <button class="btn btn-primary" type="button" (click)="onAddTag()">Add Tags</button>
+                        </div>
+                    </div>
+                    <div formArrayName="tags">
+                        <div *ngFor="let tag of tags.controls; let i=index">
+                            <div class="form-group row">
+                                <div class="col-md-8">
+                                    <label for="i">Free Tag {{i + 1}}</label>
+                                    <div class="input-group">
+                                    <input type="text" class="form-control" [formControlName]="i">
+                                    <div class="input-group-append"><span class="input-group-text">
+                                            <i class="fa fa-trash" style="color: red; cursor: pointer;" (click)="removeTag(i)"></i>
+                                        </span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" [disabled]="!registerForm.valid" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
